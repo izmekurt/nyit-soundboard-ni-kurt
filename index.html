@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soundboard ni Kurt</title>
+
+<style>
+  /* Light and Dark mode colors */
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    padding: 80px 20px 20px 20px; /* leave space for header */
+    background: #111; /* dark by default */
+    color: white;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  body.light {
+    background: #f0f0f0;
+    color: #111;
+  }
+
+  /* Header */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 100;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  body.light header {
+    background: #ddd;
+    color: #111;
+  }
+
+  /* Moon button */
+  #modeToggle {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+  }
+
+  /* Buttons */
+  button.sound-btn {
+    padding: 22px;
+    font-size: 16px;
+    background: #2c2c2c;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  body.light button.sound-btn {
+    background: #ddd;
+    color: #111;
+  }
+
+  button.sound-btn:hover {
+    background: #444;
+  }
+
+  body.light button.sound-btn:hover {
+    background: #bbb;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Header -->
+<header>
+  Soundboard ni Kurt
+  <button id="modeToggle">🌙</button>
+</header>
+
+<!-- Sound buttons -->
+<button class="sound-btn" data-key="1">Intro</button>
+<button class="sound-btn" data-key="2">Rizz</button>
+<button class="sound-btn" data-key="3">Vine</button>
+<button class="sound-btn" data-key="4">Laugh</button>
+<button class="sound-btn" data-key="5">Gasp</button>
+<button class="sound-btn" data-key="6">Yehey</button>
+<button class="sound-btn" data-key="7">Knock</button>
+<button class="sound-btn" data-key="8">Bass Vine</button>
+<button class="sound-btn" data-key="9">Alipin</button>
+<button class="sound-btn" data-key="10">Untitled 10</button>
+
+<button class="sound-btn" data-key="11">Untitled 11</button>
+<button class="sound-btn" data-key="12">Untitled 12</button>
+<button class="sound-btn" data-key="13">Untitled 13</button>
+<button class="sound-btn" data-key="14">Untitled 14</button>
+<button class="sound-btn" data-key="15">Untitled 15</button>
+
+<button class="sound-btn" data-key="16">Untitled 16</button>
+<button class="sound-btn" data-key="17">Untitled 17</button>
+<button class="sound-btn" data-key="18">Untitled 18</button>
+<button class="sound-btn" data-key="19">Untitled 19</button>
+<button class="sound-btn" data-key="20">Untitled 20</button>
+
+<script>
+  // Create Audio objects
+  const sounds = {};
+  for (let i = 1; i <= 20; i++) {
+    sounds[i] = new Audio(`sounds/${i.toString().padStart(2,'0')}.wav`);
+  }
+
+  const buttons = document.querySelectorAll('.sound-btn');
+
+  buttons.forEach(btn => {
+    const key = btn.dataset.key;
+    const audio = sounds[key];
+
+    // Left click: play / pause
+    btn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play().catch(err => console.log("Audio error:", err));
+      } else {
+        audio.pause();
+      }
+    });
+
+    // Double click: STOP
+    btn.addEventListener('dblclick', () => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+
+    // Right click: STOP
+    btn.addEventListener('contextmenu', (e) => {
+      e.preventDefault(); // stop right-click menu
+      audio.pause();
+      audio.currentTime = 0;
+    });
+  });
+</script>
+
+</body>
+</html>
